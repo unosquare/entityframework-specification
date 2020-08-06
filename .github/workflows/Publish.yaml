@@ -20,7 +20,6 @@ jobs:
         run: |
           dotnet build --configuration Release --no-restore     
       - name: Publish Unosquare.EntityFramework.Specification
-        if: github.ref == 'refs/heads/master'
         uses: brandedoutcast/publish-nuget@v2.5.2
         with:
             PROJECT_FILE_PATH: src/Unosquare.EntityFramework.Specification/Unosquare.EntityFramework.Specification.csproj
