@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using FluentAssertions;
 using Unosquare.EntityFramework.Specification.Extensions;
 using Unosquare.EntityFramework.Specification.Primitive;
+using Unosquare.EntityFramework.Specification.Tests.TestModels;
 using Xunit;
 
 namespace Unosquare.EntityFramework.Specification.Tests
@@ -11,7 +12,7 @@ namespace Unosquare.EntityFramework.Specification.Tests
     public class SpecificationExtensionsTests
     {
         [Fact]
-        public void And_WhenSpecificationsAreApplicable_ShouldCorrectlyFilterItems()
+        public void And_WhenMultipleSpecificationsAreApplicable_ShouldCorrectlyFilterItems()
         {
             // Arrange
             var first = new ExpressionSpec<ItemForTest>(x => x.Id.Contains("1"));
@@ -31,7 +32,7 @@ namespace Unosquare.EntityFramework.Specification.Tests
         }
         
         [Fact]
-        public void And_WhenSelectionExpressionApplicableBetweenSpecifications_ShouldCorrectlyFilterItems()
+        public void And_WhenSelectionExpressionApplicableBetweenMultipleSpecifications_ShouldCorrectlyFilterItems()
         {
             // Arrange
             var first = new ExpressionSpec<ItemForTest>(x => x.Id.Contains("2"));
@@ -51,7 +52,7 @@ namespace Unosquare.EntityFramework.Specification.Tests
         }
         
         [Fact]
-        public void And_WhenSelectorApplicableBetweenSpecifications_ShouldCorrectlyFilterItems()
+        public void And_WhenSelectorApplicableBetweenMultipleSpecifications_ShouldCorrectlyFilterItems()
         {
             // Arrange
             var first = new ExpressionSpec<ItemForTest>(x => x.Id.Contains("2"));
@@ -95,7 +96,7 @@ namespace Unosquare.EntityFramework.Specification.Tests
             var spec = new ExpressionSpec<ItemForTest>(x => x.Id.Contains("1"));
 
             var items = new[] { new ItemForTest("11"), new ItemForTest("21"), new ItemForTest("22") };
-            var notSpec =spec.Not();
+            var notSpec = spec.Not();
 
             // Act
             var result = items.Where(x => notSpec.IsSatisfy(x)).ToArray();
@@ -108,7 +109,7 @@ namespace Unosquare.EntityFramework.Specification.Tests
         }
 
         [Fact]
-        public void OrSpecificationTest()
+        public void Or_WhenMultipleSpecificationsAreApplicable_ShouldCorrectlyFilterItems()
         {
             // Arrange
             var first = new ExpressionSpec<ItemForTest>(x => x.Id.Contains("1"));
@@ -120,13 +121,15 @@ namespace Unosquare.EntityFramework.Specification.Tests
             var result = items.Where(x => orSpec.IsSatisfy(x)).ToArray();
 
             // Assert
-            result.Should()
+            result
+                .Should()
                 .NotContain(x => x.Id == "33")
-                .And.HaveCount(2);
+                .And
+                .HaveCount(2);
         }
 
         [Fact]
-        public void OrSpecification_PassShowAllSpec_ShouldIgnoreIt()
+        public void Or_PassShowAllSpec_NoItemsAreFiltered()
         {
             // Arrange
             var first = new ExpressionSpec<ItemForTest>(x => true);
@@ -143,29 +146,7 @@ namespace Unosquare.EntityFramework.Specification.Tests
                 .And.HaveCount(1);
         }
     }
-
-    internal class ItemForTest
-    {
-        public ItemForTest(string id, SubItemForTest subItem = null)
-        {
-            Id = id;
-            SubItem = subItem;
-        }
-        public string Id { get; }
-        
-        public SubItemForTest SubItem { get; }
-    }
     
-    internal class SubItemForTest
-    {
-        public bool Active { get; }
-        
-        public SubItemForTest(bool active)
-        {
-            Active = active;
-        }
-    }
-
     internal class SubItemSelector : Selector<ItemForTest, SubItemForTest>
     {
         public override Expression<Func<ItemForTest, SubItemForTest>> BuildExpression() =>
