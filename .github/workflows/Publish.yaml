@@ -1,0 +1,26 @@
+name: publish to nuget
+
+on: [push]
+# on:
+#   push:
+#     branches: [ master ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x'
+      - name: Install dependencies
+        run: |
+          dotnet restore
+      - name: Build and publish with dotnet
+        run: |
+          dotnet build --configuration Release --no-restore     
+      - name: Publish Unosquare.EntityFramework.Specification
+        uses: brandedoutcast/publish-nuget@v2.5.2
+        with:
+            PROJECT_FILE_PATH: src/Unosquare.EntityFramework.Specification/Unosquare.EntityFramework.Specification.csproj
+            NUGET_KEY: ${{secrets.NUGET_API_KEY}}
