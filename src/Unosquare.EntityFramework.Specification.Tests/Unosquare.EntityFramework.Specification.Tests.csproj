@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Unosquare.EntityFramework.Specification\Unosquare.EntityFramework.Specification.csproj" />
+      <ProjectReference Include="..\Unosquare.EntityFramework.Specification.Common\Unosquare.EntityFramework.Specification.Common.csproj" />
     </ItemGroup>
 
 </Project>

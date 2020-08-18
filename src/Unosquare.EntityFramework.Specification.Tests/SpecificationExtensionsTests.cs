@@ -2,9 +2,9 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using FluentAssertions;
-using Unosquare.EntityFramework.Specification.Extensions;
-using Unosquare.EntityFramework.Specification.Primitive;
-using Unosquare.EntityFramework.Specification.Tests.TestModels;
+using Unosquare.EntityFramework.Specification.Common.Extensions;
+using Unosquare.EntityFramework.Specification.Common.Primitive;
+using Unosquare.EntityFramework.Specification.Common.Tests.TestModels;
 using Xunit;
 
 namespace Unosquare.EntityFramework.Specification.Tests

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unosquare.EntityFramework.Specification", "src\Unosquare.EntityFramework.Specification\Unosquare.EntityFramework.Specification.csproj", "{FD7DBD1B-CA72-44B5-ABDA-E42A8BE0F918}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unosquare.EntityFramework.Specification.Common", "src\Unosquare.EntityFramework.Specification.Common\Unosquare.EntityFramework.Specification.Common.csproj", "{FD7DBD1B-CA72-44B5-ABDA-E42A8BE0F918}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unosquare.EntityFramework.Specification.Tests", "src\Unosquare.EntityFramework.Specification.Tests\Unosquare.EntityFramework.Specification.Tests.csproj", "{EACA3DB8-6F04-4692-99DB-FE2A8C40B78D}"
 EndProject

@@ -1,4 +1,4 @@
-namespace Unosquare.EntityFramework.Specification.Primitive
+namespace Unosquare.EntityFramework.Specification.Common.Primitive
 {
     public class KeyWithCount<T>
     {

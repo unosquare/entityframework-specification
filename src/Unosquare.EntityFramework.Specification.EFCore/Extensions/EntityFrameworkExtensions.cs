@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Unosquare.EntityFramework.Specification.Extensions;
-using Unosquare.EntityFramework.Specification.Primitive;
+using Unosquare.EntityFramework.Specification.Common.Extensions;
+using Unosquare.EntityFramework.Specification.Common.Primitive;
 using Microsoft.EntityFrameworkCore;
 
 namespace Unosquare.EntityFramework.Specification.EFCore.Extensions

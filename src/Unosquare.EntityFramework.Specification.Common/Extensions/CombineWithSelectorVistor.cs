@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
-namespace Unosquare.EntityFramework.Specification.Extensions
+namespace Unosquare.EntityFramework.Specification.Common.Extensions
 {
     [ExcludeFromCodeCoverage]
     internal class CombineWithSelectorVisitor : ExpressionVisitor
