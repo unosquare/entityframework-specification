@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace Unosquare.EntityFramework.Specification.Extensions
 {
     [ExcludeFromCodeCoverage]
-    internal static class ExpressionExtensions
+    public static class ExpressionExtensions
     {
         public static Expression Replace(this Expression expression, ParameterExpression from, ParameterExpression to)
         {
