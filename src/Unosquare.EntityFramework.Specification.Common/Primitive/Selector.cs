@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Unosquare.EntityFramework.Specification.Primitive
+namespace Unosquare.EntityFramework.Specification.Common.Primitive
 {
     public abstract class Selector
     {

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Unosquare.EntityFramework.Specification.Primitive;
+using Unosquare.EntityFramework.Specification.Common.Primitive;
 
-namespace Unosquare.EntityFramework.Specification.Extensions
+namespace Unosquare.EntityFramework.Specification.Common.Extensions
 {
     public static class EmbeddableExtensions
     {

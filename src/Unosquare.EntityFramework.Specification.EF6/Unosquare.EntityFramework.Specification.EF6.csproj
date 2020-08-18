@@ -6,7 +6,7 @@
         <Authors>Unosquare</Authors>
         <Company>Unosquare</Company>
         <Version>1.0.0</Version>
-        <AssemblyName>Unosquare.EntityFramework.Specification.EF6</AssemblyName>
+        <AssemblyName>Unosquare.EntityFramework.Specification</AssemblyName>
         <RootNamespace>Unosquare.EntityFramework.Specification.EF6</RootNamespace>
         <ProjectGuid>{a3e5843d-7acd-43a3-a826-09a138d99dd1}</ProjectGuid>
     </PropertyGroup>
@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Unosquare.EntityFramework.Specification\Unosquare.EntityFramework.Specification.csproj" />
+      <ProjectReference Include="..\Unosquare.EntityFramework.Specification.Common\Unosquare.EntityFramework.Specification.Common.csproj" />
     </ItemGroup>
 
 </Project>

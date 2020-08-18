@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Unosquare.EntityFramework.Specification.Extensions;
+using Unosquare.EntityFramework.Specification.Common.Extensions;
 
-namespace Unosquare.EntityFramework.Specification.Primitive
+namespace Unosquare.EntityFramework.Specification.Common.Primitive
 {
     public class OrSpecification<T> : Specification<T>
     {
