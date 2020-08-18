@@ -1,4 +1,4 @@
-name: publish to nuget
+name: Publish to Nuget
 
 on:
   push:
@@ -15,11 +15,19 @@ jobs:
       - name: Install dependencies
         run: |
           dotnet restore
-      - name: Build and publish with dotnet
+      - name: Build
         run: |
           dotnet build --configuration Release --no-restore     
-      - name: Publish Unosquare.EntityFramework.Specification
+      - name: Test
+        run: |
+          dotnet test     
+      - name: Publish EF6
         uses: brandedoutcast/publish-nuget@v2.5.2
         with:
-            PROJECT_FILE_PATH: src/Unosquare.EntityFramework.Specification/Unosquare.EntityFramework.Specification.csproj
+            PROJECT_FILE_PATH: src/Unosquare.EntityFramework.Specification.EF6/Unosquare.EntityFramework.Specification.EF6.csproj
+            NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      - name: Publish EFCore
+        uses: brandedoutcast/publish-nuget@v2.5.2
+        with:
+            PROJECT_FILE_PATH: src/Unosquare.EntityFramework.Specification.EFCore/Unosquare.EntityFramework.Specification.EFCore.csproj
             NUGET_KEY: ${{secrets.NUGET_API_KEY}}

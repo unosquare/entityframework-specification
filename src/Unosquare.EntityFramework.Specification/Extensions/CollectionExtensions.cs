@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
@@ -65,34 +64,9 @@ namespace Unosquare.EntityFramework.Specification.Extensions
             return query.Where(x => specification.IsSatisfy(selector(x)));
         }
 
-        public static Task<int> CountAsync<T>(this IQueryable<T> query, Specification<T> specification)
-        {
-            if (specification == null) throw new ArgumentNullException(nameof(specification));
-            
-            var expression = specification
-                .BuildExpression()
-                .ResolveEmbedded();
-            
-            return query.CountAsync(expression);
-        }
+ 
         
-        public static Task<int> CountAsync<T, TU>(this IQueryable<T> query, Specification<TU> specification, 
-            Expression<Func<T, TU>> selector)
-        {
-            if (specification == null) throw new ArgumentNullException(nameof(specification));
-            if (selector == null) throw new ArgumentNullException(nameof(selector));
-            
-            var expression = selector
-                .CombinePropertySelectorWithPredicate(specification.BuildExpression())
-                .ResolveEmbedded();
-            
-            return query.CountAsync(expression);
-        }
-        
-        public static Task<int> CountAsync<T, TU>(this IQueryable<T> query, Specification<TU> specification, Selector<T, TU> selector)
-        {
-            return query.CountAsync(specification, selector.BuildExpression());
-        }
+
 
         public static int Count<T, TU>(this IQueryable<T> query, Specification<TU> specification, Expression<Func<T, TU>> selector)
         {
@@ -174,12 +148,7 @@ namespace Unosquare.EntityFramework.Specification.Extensions
             return query.Select(expression);
         }
 
-        public static Task<double> AverageAsync<T>(this IQueryable<T> query, Selector<T, int> selector)
-        {
-            if (selector == null) throw new ArgumentNullException(nameof(selector));
-            
-            return query.AverageAsync(selector.BuildExpression().ResolveEmbedded());
-        }
+
         
         public static IQueryable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(this IQueryable<TSource> query,
             Selector<TSource, TKey> specification)
@@ -209,19 +178,6 @@ namespace Unosquare.EntityFramework.Specification.Extensions
             return query.GroupBy(grouping).Select(expression);
         }
         
-        public static Task<Dictionary<TU, TV>> GroupByDictionaryAsync<T, TU, TV>(this IQueryable<T> query, GroupBySelector<T, TU, TV> selector)
-        {
-            if (selector == null) throw new ArgumentNullException(nameof(selector));
-
-            var grouping = selector.GroupBy().ResolveEmbedded();
-            var expression = selector
-                .BuildExpression()
-                .ResolveEmbedded()
-                .Compile();
-            
-            return query.GroupBy(grouping).ToDictionaryAsync(x => x.Key, expression);
-        }
-        
         public static IQueryable<KeyWithCount<TU>> GroupAndCount<T, TU>(this IQueryable<T> query, Selector<T, TU> selector)
         {
             if (selector == null) throw new ArgumentNullException(nameof(selector));
@@ -232,28 +188,6 @@ namespace Unosquare.EntityFramework.Specification.Extensions
                 Key = x.Key, 
                 Count = x.Count()
             });
-        }
-        
-        public static Task<Dictionary<TU, int>> GroupAndDictionaryForCountAsync<T, TU>(this IQueryable<T> query, Selector<T, TU> selector)
-        {
-            if (selector == null) throw new ArgumentNullException(nameof(selector));
-
-            var grouping = selector.BuildExpression().ResolveEmbedded();
-            return query
-                .GroupBy(grouping)
-                .ToDictionaryAsync(x => x.Key, x => x.Count());
-        }
-        
-        public static Task<Dictionary<TUU, int>> GroupAndDictionaryForCountAsync<T, TU, TUU>(this IQueryable<T> query, Selector<TU, TUU> selector, Expression<Func<T, TU>> additionalSelector)
-        {
-            if (selector == null) throw new ArgumentNullException(nameof(selector));
-            if (additionalSelector == null) throw new ArgumentNullException(nameof(additionalSelector));
-
-            var grouping = selector.BuildExpression().ResolveEmbedded();
-            return query
-                .Select(additionalSelector)
-                .GroupBy(grouping)
-                .ToDictionaryAsync(x => x.Key, x => x.Count());
         }
     }
 }
