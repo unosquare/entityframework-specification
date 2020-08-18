@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Unosquare.EntityFramework.Specification.Primitive;
 
 namespace Unosquare.EntityFramework.Specification.Extensions
@@ -63,10 +62,6 @@ namespace Unosquare.EntityFramework.Specification.Extensions
             
             return query.Where(x => specification.IsSatisfy(selector(x)));
         }
-
- 
-        
-
 
         public static int Count<T, TU>(this IQueryable<T> query, Specification<TU> specification, Expression<Func<T, TU>> selector)
         {
@@ -147,8 +142,6 @@ namespace Unosquare.EntityFramework.Specification.Extensions
 
             return query.Select(expression);
         }
-
-
         
         public static IQueryable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(this IQueryable<TSource> query,
             Selector<TSource, TKey> specification)
