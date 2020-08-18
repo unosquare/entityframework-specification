@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using Unosquare.EntityFramework.Specification.Common.Primitive;
-using Unosquare.EntityFramework.Specification.Common.Tests.TestModels;
 using Unosquare.EntityFramework.Specification.Common.Extensions;
+using Unosquare.EntityFramework.Specification.Tests.TestModels;
 using Xunit;
 
 namespace Unosquare.EntityFramework.Specification.Tests
