@@ -47,6 +47,34 @@ namespace Unosquare.EntityFramework.Specification.EFCore.Extensions
             return query.CountAsync(expression);
         }
         
+        public static Task<T> FirstOrDefaultAsync<T>(this IQueryable<T> query, Specification<T> specification)
+        {
+            if (specification == null) throw new ArgumentNullException(nameof(specification));
+            
+            var expression = specification
+                .BuildExpression()
+                .ResolveEmbedded();
+            
+            return query.FirstOrDefaultAsync(expression);
+        }
+        
+        public static Task<T> FirstOrDefaultAsync<T, TU>(this IQueryable<T> query, Specification<TU> specification, Selector<T, TU> selector)
+        {
+            return query.FirstOrDefaultAsync(specification, selector.BuildExpression());
+        }
+        
+        public static Task<T> FirstOrDefaultAsync<T, TU>(this IQueryable<T> query, Specification<TU> specification, Expression<Func<T, TU>> selector)
+        {
+            if (specification == null) throw new ArgumentNullException(nameof(specification));
+            if (selector == null) throw new ArgumentNullException(nameof(selector));
+            
+            var expression = selector
+                .CombinePropertySelectorWithPredicate(specification.BuildExpression())
+                .ResolveEmbedded();
+            
+            return query.FirstOrDefaultAsync(expression);
+        }
+        
         public static Task<Dictionary<TU, TV>> GroupByDictionaryAsync<T, TU, TV>(this IQueryable<T> query, GroupBySelector<T, TU, TV> selector)
         {
             if (selector == null) throw new ArgumentNullException(nameof(selector));

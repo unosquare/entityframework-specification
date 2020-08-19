@@ -5,7 +5,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Unosquare</Authors>
         <Company>Unosquare</Company>
-        <Version>1.0.0</Version>
+        <Version>1.0.2</Version>
         <AssemblyName>Unosquare.EntityFramework.Specification</AssemblyName>
         <RootNamespace>Unosquare.EntityFramework.Specification.EF6</RootNamespace>
         <ProjectGuid>{a3e5843d-7acd-43a3-a826-09a138d99dd1}</ProjectGuid>
