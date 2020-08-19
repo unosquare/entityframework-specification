@@ -8,7 +8,7 @@
         <Version>1.0.3</Version>
         <AssemblyName>Unosquare.EntityFramework.Specification</AssemblyName>
         <RootNamespace>Unosquare.EntityFramework.Specification.EF6</RootNamespace>
-        <ProjectGuid>{a3e5843d-7acd-43a3-a826-09a138d99dd1}</ProjectGuid>
+        <ProjectGuid>{06822C98-230E-4E97-A168-629EACC3D376}</ProjectGuid>
         <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
     </PropertyGroup>
 
