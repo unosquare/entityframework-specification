@@ -22,8 +22,10 @@ jobs:
       - name: Publish EF6
         run: |
           dotnet pack -c Release src/Unosquare.EntityFramework.Specification.EF6/Unosquare.EntityFramework.Specification.EF6.csproj -o .
-          dotnet nuget push Unosquare.EntityFramework.Specification.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
+          dotnet nuget push *.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
+          rm *.nupkg
       - name: Publish EFCore
         run: |
           dotnet pack -c Release src/Unosquare.EntityFramework.Specification.EFCore/Unosquare.EntityFramework.Specification.EFCore.csproj -o .
-          dotnet nuget push Unosquare.EntityFramework.Specification.EFCore.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
+          dotnet nuget push *.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
+          rm *.nupkg
