@@ -5,18 +5,26 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Unosquare</Authors>
         <Company>Unosquare</Company>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
         <AssemblyName>Unosquare.EntityFramework.Specification.EFCore</AssemblyName>
         <RootNamespace>Unosquare.EntityFramework.Specification.EFCore</RootNamespace>
         <ProjectGuid>{af457de2-254c-4457-a5ee-399fc985c85b}</ProjectGuid>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
+        <ProjectReference Include="..\Unosquare.EntityFramework.Specification.Common\Unosquare.EntityFramework.Specification.Common.csproj">
+            <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+            <IncludeAssets>Unosquare.EntityFramework.Specification.Common.dll</IncludeAssets>
+        </ProjectReference>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Unosquare.EntityFramework.Specification.Common\Unosquare.EntityFramework.Specification.Common.csproj" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
     </ItemGroup>
 
+    <Target DependsOnTargets="ResolveReferences" Name="CopyProjectReferencesToPackage">
+        <ItemGroup>
+            <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))"/>
+        </ItemGroup>
+    </Target>
 </Project>
