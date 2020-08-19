@@ -18,4 +18,4 @@ jobs:
           dotnet build --configuration Release --no-restore     
       - name: Test
         run: |
-          dotnet test  
+          dotnet test
