@@ -22,12 +22,10 @@ jobs:
         run: |
           dotnet test     
       - name: Publish EF6
-        uses: brandedoutcast/publish-nuget@v2.5.2
-        with:
-            PROJECT_FILE_PATH: src/Unosquare.EntityFramework.Specification.EF6/Unosquare.EntityFramework.Specification.EF6.csproj
-            NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        run: |
+          dotnet pack -c Release src/Unosquare.EntityFramework.Specification.EF6/Unosquare.EntityFramework.Specification.EF6.csproj -o .
+          dotnet nuget push Unosquare.EntityFramework.Specification.nupkg -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
       - name: Publish EFCore
-        uses: brandedoutcast/publish-nuget@v2.5.2
-        with:
-            PROJECT_FILE_PATH: src/Unosquare.EntityFramework.Specification.EFCore/Unosquare.EntityFramework.Specification.EFCore.csproj
-            NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        run: |
+          dotnet pack -c Release src/Unosquare.EntityFramework.Specification.EFCore/Unosquare.EntityFramework.Specification.EFCore.csproj -o .
+          dotnet nuget push Unosquare.EntityFramework.Specification.EFCore.nupkg -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
