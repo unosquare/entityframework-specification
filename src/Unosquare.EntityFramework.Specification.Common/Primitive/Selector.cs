@@ -33,4 +33,18 @@ namespace Unosquare.EntityFramework.Specification.Common.Primitive
         
         public override Expression GetExpression() => BuildExpression();
     }
+    
+    public class ExpressionSelector<T, TU> : Selector<T, TU>
+    {
+        private readonly Expression<Func<T, TU>> _exp;
+
+        public ExpressionSelector(Expression<Func<T, TU>> exp = null)
+        {
+            _exp = exp;
+        }
+        public override Expression<Func<T, TU>> BuildExpression()
+        {
+            return _exp;
+        }
+    }
 }
