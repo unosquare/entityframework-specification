@@ -5,7 +5,6 @@ using Unosquare.EntityFramework.Specification.Common.Primitive;
 
 namespace Unosquare.EntityFramework.Specification.Common.Extensions
 {
-    [ExcludeFromCodeCoverage]
     public static class SpecificationExtensions
     {
         public static Specification<T> And<T>(this Specification<T> left, Specification<T> right)

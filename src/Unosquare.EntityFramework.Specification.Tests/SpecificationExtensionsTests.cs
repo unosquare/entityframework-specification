@@ -146,10 +146,4 @@ namespace Unosquare.EntityFramework.Specification.Tests
                 .And.HaveCount(1);
         }
     }
-    
-    internal class SubItemSelector : Selector<ItemForTest, SubItemForTest>
-    {
-        public override Expression<Func<ItemForTest, SubItemForTest>> BuildExpression() =>
-            x => x.SubItem;
-    }
 }
