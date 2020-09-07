@@ -7,7 +7,7 @@ using Unosquare.EntityFramework.Specification.Common.Primitive;
 
 namespace Unosquare.EntityFramework.Specification.Common.Extensions
 {
-    [ExcludeFromCodeCoverage]
+
     public static class CollectionExtensions
     {
         public static IQueryable<T> Where<T>(this IQueryable<T> query, Specification<T> specification)
