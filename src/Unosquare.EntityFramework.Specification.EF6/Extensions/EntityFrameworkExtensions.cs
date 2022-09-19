@@ -1,7 +1,7 @@
+using System.Data.Entity;
 using System.Linq.Expressions;
 using Unosquare.EntityFramework.Specification.Common.Extensions;
 using Unosquare.EntityFramework.Specification.Common.Primitive;
-using System.Data.Entity;
 
 namespace Unosquare.EntityFramework.Specification.EF6.Extensions;
 

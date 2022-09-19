@@ -11,10 +11,10 @@ internal class ItemForTest
         SubItem = subItem;
     }
     public string Id { get; }
-        
+
     public SubItemForTest? SubItem { get; }
 }
-    
+
 internal class SubItemSelector : Selector<ItemForTest, SubItemForTest?>
 {
     public override Expression<Func<ItemForTest, SubItemForTest?>> BuildExpression() =>

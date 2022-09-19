@@ -27,7 +27,7 @@ public class SpecificationExtensionsTests
             .And
             .HaveCount(1);
     }
-        
+
     [Fact]
     public void And_WhenSelectionExpressionApplicableBetweenMultipleSpecifications_ShouldCorrectlyFilterItems()
     {
@@ -47,7 +47,7 @@ public class SpecificationExtensionsTests
             .And
             .HaveCount(1);
     }
-        
+
     [Fact]
     public void And_WhenSelectorApplicableBetweenMultipleSpecifications_ShouldCorrectlyFilterItems()
     {
@@ -67,14 +67,14 @@ public class SpecificationExtensionsTests
             .And
             .HaveCount(1);
     }
-        
+
     [Fact]
     public void And_WhenShowAllIsApplied_NoItemsAreFiltered()
     {
         // Arrange
         var first = new ExpressionSpec<ItemForTest>();
         var second = new ExpressionSpec<ItemForTest>();
-        var items = new[] { new ItemForTest("11"), new ItemForTest("22")};
+        var items = new[] { new ItemForTest("11"), new ItemForTest("22") };
         var andSpec = first.And(second);
 
         // Act

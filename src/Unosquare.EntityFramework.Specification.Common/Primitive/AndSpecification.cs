@@ -8,16 +8,16 @@ public class AndSpecification<T> : Specification<T>
     private readonly Specification<T> _right;
 
     protected AndSpecification() { }
-        
+
     public AndSpecification(Specification<T> left, Specification<T> right)
     {
         _left = left;
         _right = right;
     }
-        
-    public override Expression<Func<T, bool>> BuildExpression() => 
+
+    public override Expression<Func<T, bool>> BuildExpression() =>
         ApplyAnd(_left.BuildExpression(), _right.BuildExpression());
-        
+
     protected Expression<Func<T, bool>> ApplyAnd(Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
     {
         var leftParameter = left.Parameters[0];
@@ -28,7 +28,7 @@ public class AndSpecification<T> : Specification<T>
         return Expression.Lambda<Func<T, bool>>(Expression.AndAlso(left.Body, rightWithChangedParam), leftParameter);
     }
 }
-    
+
 public class AndSpecification<T, TU> : AndSpecification<T>
 {
     private readonly Expression<Func<T, TU>> _selector;

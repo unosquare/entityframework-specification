@@ -1,6 +1,6 @@
 using FluentAssertions;
-using Unosquare.EntityFramework.Specification.Common.Primitive;
 using Unosquare.EntityFramework.Specification.Common.Extensions;
+using Unosquare.EntityFramework.Specification.Common.Primitive;
 using Unosquare.EntityFramework.Specification.Tests.TestModels;
 using Xunit;
 
