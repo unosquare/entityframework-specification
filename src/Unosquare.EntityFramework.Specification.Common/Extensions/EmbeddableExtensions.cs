@@ -28,6 +28,18 @@ public static class EmbeddableExtensions
         return (Expression<T>)visitor.Visit(exp);
     }
 
+    public static Expression ResolveEmbedded(this MethodCallExpression exp)
+    {
+        var arguments = new List<Expression>();
+        var visitor = new ResolveEmbeddedVisitor();
+        foreach (var argument in exp.Arguments)
+        {
+            arguments.Add(visitor.Visit(argument));
+        }
+
+        return Expression.Call(exp.Method, arguments);
+    }
+
     private class MultiParamReplaceVisitor : ExpressionVisitor
     {
         private readonly Dictionary<ParameterExpression, Expression> _replacements;
@@ -36,7 +48,8 @@ public static class EmbeddableExtensions
         public MultiParamReplaceVisitor(Expression[] parameterValues, LambdaExpression expressionToVisit)
         {
             if (parameterValues.Length != expressionToVisit.Parameters.Count)
-                throw new ArgumentException($"The parameter values count ({parameterValues.Length}) does not match the expression parameter count ({expressionToVisit.Parameters.Count})");
+                throw new ArgumentException(
+                    $"The parameter values count ({parameterValues.Length}) does not match the expression parameter count ({expressionToVisit.Parameters.Count})");
 
             _replacements = expressionToVisit.Parameters
                 .Select((parameter, idx) => new { Idx = idx, Parameter = parameter })
@@ -68,7 +81,8 @@ public static class EmbeddableExtensions
 
         protected override Expression VisitInvocation(InvocationExpression node)
         {
-            if (node.Expression.NodeType != ExpressionType.Call || !DoesExpressionMatchMethod((MethodCallExpression)node.Expression, EmbedMethod))
+            if (node.Expression.NodeType != ExpressionType.Call ||
+                !DoesExpressionMatchMethod((MethodCallExpression)node.Expression, EmbedMethod))
                 return base.VisitInvocation(node);
 
             var targetLambda = ExtractEmbeddedExpression((MethodCallExpression)node.Expression);

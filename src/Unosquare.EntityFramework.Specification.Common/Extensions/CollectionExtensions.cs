@@ -225,6 +225,18 @@ public static class CollectionExtensions
         return query.Select(additionalSelector).Select(selector);
     }
 
+    public static IQueryable<T> ResolveEmbedded<T>(this IQueryable<T> query)
+    {
+        if (query.Expression is MethodCallExpression exp)
+        {
+            var expression = exp.ResolveEmbedded();
+            
+            return query.Provider.CreateQuery<T>(expression);
+        }
+        
+        return query;
+    }
+
     public static IEnumerable<TU> Select<T, TU>(this IEnumerable<T> query, Selector<T, TU> selector)
     {
         if (selector == null) throw new ArgumentNullException(nameof(selector));
@@ -233,7 +245,7 @@ public static class CollectionExtensions
 
         return query.Select(expression);
     }
-
+    
     public static IQueryable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(this IQueryable<TSource> query,
         Selector<TSource, TKey> specification)
     {

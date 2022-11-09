@@ -124,7 +124,7 @@ public class CollectionExtensionsTests
             .And
             .HaveCount(1);
     }
-
+    
     [Fact]
     public void Count_WhenApplicableSpecificationSupplied_ShouldCorrectlyCountResults()
     {
@@ -460,6 +460,29 @@ public class CollectionExtensionsTests
             .Contain(items.ElementAt(0).SubItem);
     }
 
+    // This is not working as intended, this test should fail as it is right now
+    [Fact]
+    public void Select_WithResolveEmbedded_ShouldSelectCorrectOutput()
+    {
+        // Arrange
+        var items = RetrieveTestItemsWithItemsWithin()
+            .AsQueryable();
+
+        // Act
+        var results = items
+            .Select(x => new
+            {
+                Items = x.Where(y => RetrieveSpecificationForActiveSubItem(false).Embed()(y))
+            })
+            .ResolveEmbedded();
+
+        // Assert
+        results
+            .SelectMany(x => x.Items)
+            .Count()
+            .Should().Be(1);
+    }
+
     [Fact]
     public void Select_WhenApplicableSelectorSuppliedForEnumerable_ShouldSelectCorrectOutput()
     {
@@ -527,4 +550,10 @@ public class CollectionExtensionsTests
 
     private static IList<ItemForTest> RetrieveTestItems() =>
         new[] { new ItemForTest("1", new(true)), new ItemForTest("2"), new ItemForTest("3") };
+
+    private static IList<IList<SubItemForTest>> RetrieveTestItemsWithItemsWithin() =>
+        new List<IList<SubItemForTest>>()
+        {
+            new List<SubItemForTest> { new SubItemForTest(true), new SubItemForTest(false) }
+        };
 }

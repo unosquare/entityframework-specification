@@ -5,7 +5,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Unosquare</Authors>
         <Company>Unosquare</Company>
-        <Version>2.0.2</Version>
+        <Version>2.0.3</Version>
 	    <EnableNETAnalyzers>true</EnableNETAnalyzers>
 	    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
