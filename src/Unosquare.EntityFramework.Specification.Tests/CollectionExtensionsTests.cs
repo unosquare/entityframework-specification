@@ -85,6 +85,25 @@ public class CollectionExtensionsTests
             .And
             .HaveCount(1);
     }
+    
+    
+    [Fact]
+    public void Where_WithResolveEmbedded_LimitsCorrectOutput()
+    {
+        // Arrange
+        var items = RetrieveTestItemsWithItemsWithin()
+            .AsQueryable();
+
+        // Act
+        var results = items
+            .Where(x => x.Any(y => RetrieveSpecificationForActiveSubItem(true).Embed()(y)))
+            .ResolveEmbedded();
+
+        // Assert
+        results
+            .Count()
+            .Should().Be(1);
+    }
 
     [Fact]
     public void Where_WhenApplicableSpecificationSuppliedWithSelectorFunction_ShouldCorrectlyFilterItems()
@@ -459,8 +478,7 @@ public class CollectionExtensionsTests
             .Should()
             .Contain(items.ElementAt(0).SubItem);
     }
-
-    // This is not working as intended, this test should fail as it is right now
+    
     [Fact]
     public void Select_WithResolveEmbedded_ShouldSelectCorrectOutput()
     {
