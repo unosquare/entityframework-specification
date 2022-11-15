@@ -85,6 +85,25 @@ public class CollectionExtensionsTests
             .And
             .HaveCount(1);
     }
+    
+    
+    [Fact]
+    public void Where_WithResolveEmbedded_LimitsCorrectOutput()
+    {
+        // Arrange
+        var items = RetrieveTestItemsWithItemsWithin()
+            .AsQueryable();
+
+        // Act
+        var results = items
+            .Where(x => x.Any(y => RetrieveSpecificationForActiveSubItem(true).Embed()(y)))
+            .ResolveEmbedded();
+
+        // Assert
+        results
+            .Count()
+            .Should().Be(1);
+    }
 
     [Fact]
     public void Where_WhenApplicableSpecificationSuppliedWithSelectorFunction_ShouldCorrectlyFilterItems()
@@ -124,7 +143,7 @@ public class CollectionExtensionsTests
             .And
             .HaveCount(1);
     }
-
+    
     [Fact]
     public void Count_WhenApplicableSpecificationSupplied_ShouldCorrectlyCountResults()
     {
@@ -459,6 +478,28 @@ public class CollectionExtensionsTests
             .Should()
             .Contain(items.ElementAt(0).SubItem);
     }
+    
+    [Fact]
+    public void Select_WithResolveEmbedded_ShouldSelectCorrectOutput()
+    {
+        // Arrange
+        var items = RetrieveTestItemsWithItemsWithin()
+            .AsQueryable();
+
+        // Act
+        var results = items
+            .Select(x => new
+            {
+                Items = x.Where(y => RetrieveSpecificationForActiveSubItem(false).Embed()(y))
+            })
+            .ResolveEmbedded();
+
+        // Assert
+        results
+            .SelectMany(x => x.Items)
+            .Count()
+            .Should().Be(1);
+    }
 
     [Fact]
     public void Select_WhenApplicableSelectorSuppliedForEnumerable_ShouldSelectCorrectOutput()
@@ -527,4 +568,10 @@ public class CollectionExtensionsTests
 
     private static IList<ItemForTest> RetrieveTestItems() =>
         new[] { new ItemForTest("1", new(true)), new ItemForTest("2"), new ItemForTest("3") };
+
+    private static IList<IList<SubItemForTest>> RetrieveTestItemsWithItemsWithin() =>
+        new List<IList<SubItemForTest>>()
+        {
+            new List<SubItemForTest> { new SubItemForTest(true), new SubItemForTest(false) }
+        };
 }

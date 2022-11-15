@@ -13,7 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unosquare.EntityFramework.S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Folder", "Solution Folder", "{60AEB654-2247-47DD-AC74-11DAF60B1514}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
 		.github\workflows\Publish.yaml = .github\workflows\Publish.yaml
 		.github\workflows\PullRequest.yaml = .github\workflows\PullRequest.yaml
 	EndProjectSection
