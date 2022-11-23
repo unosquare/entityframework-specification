@@ -30,12 +30,8 @@ public static class EmbeddableExtensions
 
     public static Expression ResolveEmbedded(this MethodCallExpression exp)
     {
-        var arguments = new List<Expression>();
         var visitor = new ResolveEmbeddedVisitor();
-        foreach (var argument in exp.Arguments)
-        {
-            arguments.Add(visitor.Visit(argument));
-        }
+        var arguments = exp.Arguments.Select(argument => visitor.Visit(argument)).ToList();
 
         return Expression.Call(exp.Method, arguments);
     }
@@ -45,11 +41,11 @@ public static class EmbeddableExtensions
         private readonly Dictionary<ParameterExpression, Expression> _replacements;
         private readonly LambdaExpression _expressionToVisit;
 
-        public MultiParamReplaceVisitor(Expression[] parameterValues, LambdaExpression expressionToVisit)
+        public MultiParamReplaceVisitor(IReadOnlyList<Expression> parameterValues, LambdaExpression expressionToVisit)
         {
-            if (parameterValues.Length != expressionToVisit.Parameters.Count)
+            if (parameterValues.Count != expressionToVisit.Parameters.Count)
                 throw new ArgumentException(
-                    $"The parameter values count ({parameterValues.Length}) does not match the expression parameter count ({expressionToVisit.Parameters.Count})");
+                    $"The parameter values count ({parameterValues.Count}) does not match the expression parameter count ({expressionToVisit.Parameters.Count})");
 
             _replacements = expressionToVisit.Parameters
                 .Select((parameter, idx) => new { Idx = idx, Parameter = parameter })

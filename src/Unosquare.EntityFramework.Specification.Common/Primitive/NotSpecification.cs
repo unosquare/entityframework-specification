@@ -4,10 +4,7 @@ public class NotSpecification<T> : Specification<T>
 {
     private readonly Specification<T> _exp;
 
-    public NotSpecification(Specification<T> exp)
-    {
-        _exp = exp;
-    }
+    public NotSpecification(Specification<T> exp) => _exp = exp;
 
     public override Expression<Func<T, bool>> BuildExpression()
     {

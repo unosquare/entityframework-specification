@@ -28,6 +28,9 @@ public static class EntityFrameworkExtensions
     public static Task<bool> AnyAsync<T, TU>(this IQueryable<T> query, Specification<TU> specification,
         Selector<T, TU> selector)
     {
+        if (selector == null)
+            throw new ArgumentNullException(nameof(selector));
+
         return query.AnyAsync(specification, selector.BuildExpression());
     }
 
@@ -56,7 +59,13 @@ public static class EntityFrameworkExtensions
     }
 
     public static Task<int> CountAsync<T, TU>(this IQueryable<T> query, Specification<TU> specification,
-        Selector<T, TU> selector) => query.CountAsync(specification, selector.BuildExpression());
+        Selector<T, TU> selector)
+    {
+        if (selector == null)
+            throw new ArgumentNullException(nameof(selector));
+
+        return query.CountAsync(specification, selector.BuildExpression());
+    }
 
     public static Task<int> CountAsync<T, TU>(this IQueryable<T> query, Specification<TU> specification,
         Expression<Func<T, TU>> selector)
@@ -85,6 +94,9 @@ public static class EntityFrameworkExtensions
     public static Task<T> FirstOrDefaultAsync<T, TU>(this IQueryable<T> query, Specification<TU> specification,
         Selector<T, TU> selector)
     {
+        if (selector == null)
+            throw new ArgumentNullException(nameof(selector));
+
         return query.FirstOrDefaultAsync(specification, selector.BuildExpression());
     }
 
@@ -102,7 +114,7 @@ public static class EntityFrameworkExtensions
     }
 
     public static Task<Dictionary<TU, TV>> GroupByDictionaryAsync<T, TU, TV>(this IQueryable<T> query,
-        GroupBySelector<T, TU, TV> selector)
+        GroupBySelector<T, TU, TV> selector) where TU : notnull
     {
         if (selector == null) throw new ArgumentNullException(nameof(selector));
 
@@ -116,7 +128,7 @@ public static class EntityFrameworkExtensions
     }
 
     public static Task<Dictionary<TU, int>> GroupAndDictionaryForCountAsync<T, TU>(this IQueryable<T> query,
-        Selector<T, TU> selector)
+        Selector<T, TU> selector) where TU : notnull
     {
         if (selector == null) throw new ArgumentNullException(nameof(selector));
 
@@ -127,7 +139,7 @@ public static class EntityFrameworkExtensions
     }
 
     public static Task<Dictionary<TUu, int>> GroupAndDictionaryForCountAsync<T, TU, TUu>(this IQueryable<T> query,
-        Selector<TU, TUu> selector, Expression<Func<T, TU>> additionalSelector)
+        Selector<TU, TUu> selector, Expression<Func<T, TU>> additionalSelector) where TUu : notnull
     {
         if (selector == null) throw new ArgumentNullException(nameof(selector));
         if (additionalSelector == null) throw new ArgumentNullException(nameof(additionalSelector));

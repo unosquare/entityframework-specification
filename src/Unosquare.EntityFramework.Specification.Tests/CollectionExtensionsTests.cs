@@ -85,8 +85,8 @@ public class CollectionExtensionsTests
             .And
             .HaveCount(1);
     }
-    
-    
+
+
     [Fact]
     public void Where_WithResolveEmbedded_LimitsCorrectOutput()
     {
@@ -143,7 +143,7 @@ public class CollectionExtensionsTests
             .And
             .HaveCount(1);
     }
-    
+
     [Fact]
     public void Count_WhenApplicableSpecificationSupplied_ShouldCorrectlyCountResults()
     {
@@ -478,7 +478,7 @@ public class CollectionExtensionsTests
             .Should()
             .Contain(items.ElementAt(0).SubItem);
     }
-    
+
     [Fact]
     public void Select_WithResolveEmbedded_ShouldSelectCorrectOutput()
     {
@@ -488,10 +488,7 @@ public class CollectionExtensionsTests
 
         // Act
         var results = items
-            .Select(x => new
-            {
-                Items = x.Where(y => RetrieveSpecificationForActiveSubItem(false).Embed()(y))
-            })
+            .Select(x => new { Items = x.Where(y => RetrieveSpecificationForActiveSubItem(false).Embed()(y)) })
             .ResolveEmbedded();
 
         // Assert
@@ -569,9 +566,6 @@ public class CollectionExtensionsTests
     private static IList<ItemForTest> RetrieveTestItems() =>
         new[] { new ItemForTest("1", new(true)), new ItemForTest("2"), new ItemForTest("3") };
 
-    private static IList<IList<SubItemForTest>> RetrieveTestItemsWithItemsWithin() =>
-        new List<IList<SubItemForTest>>()
-        {
-            new List<SubItemForTest> { new SubItemForTest(true), new SubItemForTest(false) }
-        };
+    private static IEnumerable<IList<SubItemForTest>> RetrieveTestItemsWithItemsWithin() =>
+        new List<IList<SubItemForTest>>() { new List<SubItemForTest> { new(true), new(false) } };
 }

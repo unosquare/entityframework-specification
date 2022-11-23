@@ -5,7 +5,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Unosquare</Authors>
         <Company>Unosquare</Company>
-        <Version>2.0.3-preview</Version>
+        <Version>2.0.4</Version>
 	    <ImplicitUsings>enable</ImplicitUsings>
 	    <EnableNETAnalyzers>true</EnableNETAnalyzers>
 	    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
@@ -15,6 +15,7 @@
         <RootNamespace>Unosquare.EntityFramework.Specification.EFCore</RootNamespace>
         <ProjectGuid>{af457de2-254c-4457-a5ee-399fc985c85b}</ProjectGuid>
         <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+		<CodeAnalysisRuleSet>..\..\StyleCop.Analyzers.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
 
     <ItemGroup>

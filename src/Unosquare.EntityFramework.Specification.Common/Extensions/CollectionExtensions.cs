@@ -31,6 +31,9 @@ public static class CollectionExtensions
     public static IQueryable<T> Where<T, TU>(this IQueryable<T> query, Specification<TU> specification,
         Selector<T, TU> selector)
     {
+        if (selector == null)
+            throw new ArgumentNullException(nameof(selector));
+
         return query.Where(specification, selector.BuildExpression());
     }
 
@@ -53,6 +56,9 @@ public static class CollectionExtensions
     public static IEnumerable<T> Where<T, TU>(this IEnumerable<T> query, Specification<TU> specification,
         Selector<T, TU> selector)
     {
+        if (selector == null)
+            throw new ArgumentNullException(nameof(selector));
+
         return query.Where(specification, selector.BuildExpression().Compile());
     }
 
@@ -82,6 +88,9 @@ public static class CollectionExtensions
 
     public static int Count<T, TU>(this IQueryable<T> query, Specification<TU> specification, Selector<T, TU> selector)
     {
+        if (selector == null)
+            throw new ArgumentNullException(nameof(selector));
+
         return query.Count(specification, selector.BuildExpression());
     }
 
@@ -103,6 +112,9 @@ public static class CollectionExtensions
 
     public static int Count<T, TU>(this IEnumerable<T> query, Specification<TU> specification, Selector<T, TU> selector)
     {
+        if (selector == null)
+            throw new ArgumentNullException(nameof(selector));
+
         return query.Count(specification, selector.BuildExpression().Compile());
     }
 
@@ -133,6 +145,9 @@ public static class CollectionExtensions
     public static bool Any<T, TU>(this IQueryable<T> query, Specification<TU> specification,
         Selector<T, TU> selector)
     {
+        if (selector == null)
+            throw new ArgumentNullException(nameof(selector));
+
         return query.Any(specification, selector.BuildExpression());
     }
 
@@ -155,17 +170,20 @@ public static class CollectionExtensions
     public static bool Any<T, TU>(this IEnumerable<T> query, Specification<TU> specification,
         Selector<T, TU> selector)
     {
+        if (selector == null)
+            throw new ArgumentNullException(nameof(selector));
+
         return query.Any(specification, selector.BuildExpression().Compile());
     }
 
-    public static T FirstOrDefault<T>(this IQueryable<T> query, Specification<T> specification)
+    public static T? FirstOrDefault<T>(this IQueryable<T> query, Specification<T> specification)
     {
         if (specification == null) throw new ArgumentNullException(nameof(specification));
 
         return query.FirstOrDefault(specification.BuildExpression().ResolveEmbedded());
     }
 
-    public static T FirstOrDefault<T, TU>(this IQueryable<T> query, Specification<TU> specification,
+    public static T? FirstOrDefault<T, TU>(this IQueryable<T> query, Specification<TU> specification,
         Expression<Func<T, TU>> selector)
     {
         if (specification == null) throw new ArgumentNullException(nameof(specification));
@@ -178,20 +196,23 @@ public static class CollectionExtensions
         return query.FirstOrDefault(expression);
     }
 
-    public static T FirstOrDefault<T, TU>(this IQueryable<T> query, Specification<TU> specification,
+    public static T? FirstOrDefault<T, TU>(this IQueryable<T> query, Specification<TU> specification,
         Selector<T, TU> selector)
     {
+        if (selector == null)
+            throw new ArgumentNullException(nameof(selector));
+
         return query.FirstOrDefault(specification, selector.BuildExpression());
     }
 
-    public static T FirstOrDefault<T>(this IEnumerable<T> query, Specification<T> specification)
+    public static T? FirstOrDefault<T>(this IEnumerable<T> query, Specification<T> specification)
     {
         if (specification == null) throw new ArgumentNullException(nameof(specification));
 
         return query.FirstOrDefault(specification.IsSatisfy);
     }
 
-    public static T FirstOrDefault<T, TU>(this IEnumerable<T> query, Specification<TU> specification,
+    public static T? FirstOrDefault<T, TU>(this IEnumerable<T> query, Specification<TU> specification,
         Func<T, TU> selector)
     {
         if (specification == null) throw new ArgumentNullException(nameof(specification));
@@ -200,9 +221,12 @@ public static class CollectionExtensions
         return query.FirstOrDefault(x => specification.IsSatisfy(selector(x)));
     }
 
-    public static T FirstOrDefault<T, TU>(this IEnumerable<T> query, Specification<TU> specification,
+    public static T? FirstOrDefault<T, TU>(this IEnumerable<T> query, Specification<TU> specification,
         Selector<T, TU> selector)
     {
+        if (selector == null)
+            throw new ArgumentNullException(nameof(selector));
+
         return query.FirstOrDefault(specification, selector.BuildExpression().Compile());
     }
 
@@ -215,26 +239,30 @@ public static class CollectionExtensions
         return query.Select(expression);
     }
 
-    public static IQueryable<TUu> Select<T, TU, TUu>(this IQueryable<T> query, Selector<TU, TUu> selector, Expression<Func<T, TU>> additionalSelector)
+    public static IQueryable<TUu> Select<T, TU, TUu>(this IQueryable<T> query, Selector<TU, TUu> selector,
+        Expression<Func<T, TU>> additionalSelector)
     {
         return query.Select(additionalSelector).Select(selector);
     }
 
-    public static IQueryable<TUu> Select<T, TU, TUu>(this IQueryable<T> query, Selector<TU, TUu> selector, Selector<T, TU> additionalSelector)
+    public static IQueryable<TUu> Select<T, TU, TUu>(this IQueryable<T> query, Selector<TU, TUu> selector,
+        Selector<T, TU> additionalSelector)
     {
         return query.Select(additionalSelector).Select(selector);
     }
 
     public static IQueryable<T> ResolveEmbedded<T>(this IQueryable<T> query)
     {
-        if (query.Expression is MethodCallExpression exp)
-        {
-            var expression = exp.ResolveEmbedded();
-            
-            return query.Provider.CreateQuery<T>(expression);
-        }
-        
-        return query;
+        if (query == null)
+            throw new ArgumentNullException(nameof(query));
+
+        if (query.Expression is not MethodCallExpression exp)
+            return query;
+
+        var expression = exp.ResolveEmbedded();
+
+        return query.Provider.CreateQuery<T>(expression);
+
     }
 
     public static IEnumerable<TU> Select<T, TU>(this IEnumerable<T> query, Selector<T, TU> selector)
@@ -245,7 +273,7 @@ public static class CollectionExtensions
 
         return query.Select(expression);
     }
-    
+
     public static IQueryable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(this IQueryable<TSource> query,
         Selector<TSource, TKey> specification)
     {
@@ -264,7 +292,8 @@ public static class CollectionExtensions
         return query.GroupBy(grouping).Select(expression);
     }
 
-    public static IQueryable<TV> GroupAndSelect<T, TU, TV>(this IQueryable<T> query, GroupBySelector<T, TU, TV> selector)
+    public static IQueryable<TV> GroupAndSelect<T, TU, TV>(this IQueryable<T> query,
+        GroupBySelector<T, TU, TV> selector)
     {
         if (selector == null) throw new ArgumentNullException(nameof(selector));
 
@@ -280,10 +309,6 @@ public static class CollectionExtensions
 
         var grouping = selector.BuildExpression().ResolveEmbedded();
 
-        return query.GroupBy(grouping).Select(x => new KeyWithCount<TU>
-        {
-            Key = x.Key,
-            Count = x.Count()
-        });
+        return query.GroupBy(grouping).Select(x => new KeyWithCount<TU> { Key = x.Key, Count = x.Count() });
     }
 }

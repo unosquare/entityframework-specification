@@ -20,6 +20,12 @@ public class OrSpecification<T> : Specification<T>
 
     protected Expression<Func<T, bool>> ApplyOr(Expression<Func<T, bool>> leftExp, Expression<Func<T, bool>> rightExp)
     {
+        if (leftExp == null)
+            throw new ArgumentNullException(nameof(leftExp));
+
+        if (rightExp == null)
+            throw new ArgumentNullException(nameof(rightExp));
+
         if (IsShowAll(leftExp)) return rightExp;
         if (IsShowAll(rightExp)) return leftExp;
 
