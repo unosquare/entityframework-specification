@@ -1,0 +1,19 @@
+name: SonarCloud .NET
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:    
+    uses: unosquare/bump-nuget-version/.github/workflows/build-no-tests-sonar.yml@master
+    with:
+      sln-file: "Unosquare.EntityFramework.Specification.sln"
+      sonar-key: "unosquare_entityframework-specification"
+    secrets:
+      github-token: ${{ secrets.GPR_ACCESS_TOKEN }}
+      cache-version: ${{ secrets.CACHE_VERSION }}
+      sonar-token: ${{ secrets.SONAR_TOKEN }}

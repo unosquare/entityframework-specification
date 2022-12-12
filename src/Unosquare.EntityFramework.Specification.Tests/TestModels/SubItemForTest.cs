@@ -1,12 +1,11 @@
-namespace Unosquare.EntityFramework.Specification.Tests.TestModels
+namespace Unosquare.EntityFramework.Specification.Tests.TestModels;
+
+internal class SubItemForTest
 {
-    internal class SubItemForTest
+    public bool Active { get; }
+
+    public SubItemForTest(bool active)
     {
-        public bool Active { get; }
-        
-        public SubItemForTest(bool active)
-        {
-            Active = active;
-        }
+        Active = active;
     }
 }
