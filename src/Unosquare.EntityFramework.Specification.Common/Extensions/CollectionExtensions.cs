@@ -4,6 +4,20 @@ namespace Unosquare.EntityFramework.Specification.Common.Extensions;
 
 public static class CollectionExtensions
 {
+    public static IQueryable<T> ResolveEmbedded<T>(this IQueryable<T> query)
+    {
+        if (query == null)
+            throw new ArgumentNullException(nameof(query));
+
+        if (query.Expression is not MethodCallExpression exp)
+            return query;
+
+        var expression = exp.ResolveEmbedded();
+
+        return query.Provider.CreateQuery<T>(expression);
+
+    }
+
     public static IQueryable<T> Where<T>(this IQueryable<T> query, Specification<T>? specification)
     {
         if (specification == null) return query;

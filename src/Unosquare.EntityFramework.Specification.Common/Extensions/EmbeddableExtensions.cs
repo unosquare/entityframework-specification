@@ -27,6 +27,14 @@ public static class EmbeddableExtensions
         var visitor = new ResolveEmbeddedVisitor();
         return (Expression<T>)visitor.Visit(exp);
     }
+    
+    public static Expression ResolveEmbedded(this MethodCallExpression exp)
+    {
+        var visitor = new ResolveEmbeddedVisitor();
+        var arguments = exp.Arguments.Select(argument => visitor.Visit(argument)).ToList();
+
+        return Expression.Call(exp.Method, arguments);
+    }
 
     private class MultiParamReplaceVisitor : ExpressionVisitor
     {
