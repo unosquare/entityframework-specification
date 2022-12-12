@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using Unosquare.EntityFramework.Specification.Common.Primitive;
+﻿using Unosquare.EntityFramework.Specification.Common.Primitive;
 
 namespace Unosquare.EntityFramework.Specification.Common.Extensions;
 

@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace Unosquare.EntityFramework.Specification.Common.Primitive;
+﻿namespace Unosquare.EntityFramework.Specification.Common.Primitive;
 
 public abstract class Specification
 {

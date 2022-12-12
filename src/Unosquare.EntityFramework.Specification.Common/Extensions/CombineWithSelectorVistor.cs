@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq.Expressions;
 
 namespace Unosquare.EntityFramework.Specification.Common.Extensions;
 
@@ -15,5 +14,5 @@ internal class CombineWithSelectorVisitor : ExpressionVisitor
         _memberExpr = memberExpr;
     }
 
-    public override Expression Visit(Expression? p) => base.Visit(p == _paramExpr ? _memberExpr : p);
+    public override Expression? Visit(Expression? p) => base.Visit(p == _paramExpr ? _memberExpr : p);
 }

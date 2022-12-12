@@ -1,15 +1,10 @@
-﻿using System.Linq.Expressions;
-
-namespace Unosquare.EntityFramework.Specification.Common.Primitive;
+﻿namespace Unosquare.EntityFramework.Specification.Common.Primitive;
 
 public class NotSpecification<T> : Specification<T>
 {
     private readonly Specification<T> _exp;
 
-    public NotSpecification(Specification<T> exp)
-    {
-        _exp = exp;
-    }
+    public NotSpecification(Specification<T> exp) => _exp = exp;
 
     public override Expression<Func<T, bool>> BuildExpression()
     {
