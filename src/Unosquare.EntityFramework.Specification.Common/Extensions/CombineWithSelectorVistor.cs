@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-
 namespace Unosquare.EntityFramework.Specification.Common.Extensions;
 
 [ExcludeFromCodeCoverage]

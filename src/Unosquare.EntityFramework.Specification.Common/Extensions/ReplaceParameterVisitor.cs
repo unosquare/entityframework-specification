@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Unosquare.EntityFramework.Specification.Common.Extensions;
+﻿namespace Unosquare.EntityFramework.Specification.Common.Extensions;
 
 [ExcludeFromCodeCoverage]
 internal class ReplaceParameterVisitor : ExpressionVisitor

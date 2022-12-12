@@ -7,7 +7,9 @@ public class OrSpecification<T> : Specification<T>
     private readonly Specification<T> _left;
     private readonly Specification<T> _right;
 
-    protected OrSpecification() { }
+    protected OrSpecification()
+    {
+    }
 
     public OrSpecification(Specification<T> left, Specification<T> right)
     {
@@ -17,12 +19,12 @@ public class OrSpecification<T> : Specification<T>
 
     public override Expression<Func<T, bool>> BuildExpression() =>
         ApplyOr(_left.BuildExpression(), _right.BuildExpression());
-        
+
     protected Expression<Func<T, bool>> ApplyOr(Expression<Func<T, bool>> leftExp, Expression<Func<T, bool>> rightExp)
     {
         if (IsShowAll(leftExp)) return rightExp;
         if (IsShowAll(rightExp)) return leftExp;
-            
+
         var leftParameter = leftExp.Parameters[0];
         var rightParameter = rightExp.Parameters[0];
 
@@ -34,7 +36,7 @@ public class OrSpecification<T> : Specification<T>
     private static bool IsShowAll(Expression<Func<T, bool>> exp) =>
         exp.Body.Type == typeof(bool) && exp.Body.NodeType == ExpressionType.Constant;
 }
-    
+
 public class OrSpecification<T, TU> : OrSpecification<T>
 {
     private readonly Specification<T> _left;
@@ -48,6 +50,6 @@ public class OrSpecification<T, TU> : OrSpecification<T>
         _selector = selector;
     }
 
-    public override Expression<Func<T, bool>> BuildExpression() => 
+    public override Expression<Func<T, bool>> BuildExpression() =>
         ApplyOr(_left.BuildExpression(), _selector.CombinePropertySelectorWithPredicate(_right.BuildExpression()));
 }
