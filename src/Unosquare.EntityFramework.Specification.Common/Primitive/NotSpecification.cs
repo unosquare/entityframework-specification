@@ -10,7 +10,7 @@ public class NotSpecification<T> : Specification<T>
     {
         var exp = _exp.BuildExpression();
         if (exp.ToString() == ShowAll.ToString()) return ShowAll;
-
+            
         var param = exp.Parameters[0];
         return Expression.Lambda<Func<T, bool>>(Expression.Not(exp.Body), param);
     }

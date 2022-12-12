@@ -1,11 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-	    <ImplicitUsings>enable</ImplicitUsings>
-	    <Nullable>enable</Nullable>
-	    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-	    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-	    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
-	    <CodeAnalysisRuleSet>..\..\StyleCop.Analyzers.ruleset</CodeAnalysisRuleSet>
+        <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 </Project>

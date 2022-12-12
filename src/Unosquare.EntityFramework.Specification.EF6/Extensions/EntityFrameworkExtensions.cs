@@ -28,9 +28,6 @@ public static class EntityFrameworkExtensions
     public static Task<bool> AnyAsync<T, TU>(this IQueryable<T> query, Specification<TU> specification,
         Selector<T, TU> selector)
     {
-        if (selector == null)
-            throw new ArgumentNullException(nameof(selector));
-
         return query.AnyAsync(specification, selector.BuildExpression());
     }
 
@@ -61,9 +58,6 @@ public static class EntityFrameworkExtensions
     public static Task<int> CountAsync<T, TU>(this IQueryable<T> query, Specification<TU> specification,
         Selector<T, TU> selector)
     {
-        if (selector == null)
-            throw new ArgumentNullException(nameof(selector));
-
         return query.CountAsync(specification, selector.BuildExpression());
     }
 
@@ -94,9 +88,6 @@ public static class EntityFrameworkExtensions
     public static Task<T> FirstOrDefaultAsync<T, TU>(this IQueryable<T> query, Specification<TU> specification,
         Selector<T, TU> selector)
     {
-        if (selector == null)
-            throw new ArgumentNullException(nameof(selector));
-
         return query.FirstOrDefaultAsync(specification, selector.BuildExpression());
     }
 

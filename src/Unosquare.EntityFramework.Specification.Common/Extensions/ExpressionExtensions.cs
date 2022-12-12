@@ -3,7 +3,7 @@
 [ExcludeFromCodeCoverage]
 public static class ExpressionExtensions
 {
-    public static Expression Replace(this Expression expression, ParameterExpression from, ParameterExpression to) =>
+    public static Expression? Replace(this Expression expression, ParameterExpression from, ParameterExpression to) =>
         new ReplaceParameterVisitor(from, to).Visit(expression);
 
     public static Expression<Func<T, bool>> CombinePropertySelectorWithPredicate<T, TU>(
@@ -14,6 +14,6 @@ public static class ExpressionExtensions
         var expr = Expression.Lambda<Func<T, bool>>(propertyPredicate.Body, propertySelector.Parameters);
         var reBinder = new CombineWithSelectorVisitor(propertyPredicate.Parameters[0], memberExpression);
 
-        return (Expression<Func<T, bool>>)reBinder.Visit(expr);
+        return (Expression<Func<T, bool>>) reBinder.Visit(expr);
     }
 }

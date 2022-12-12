@@ -7,7 +7,9 @@ public class AndSpecification<T> : Specification<T>
     private readonly Specification<T> _left;
     private readonly Specification<T> _right;
 
-    protected AndSpecification() { }
+    protected AndSpecification()
+    {
+    }
 
     public AndSpecification(Specification<T> left, Specification<T> right)
     {
@@ -20,12 +22,6 @@ public class AndSpecification<T> : Specification<T>
 
     protected Expression<Func<T, bool>> ApplyAnd(Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
     {
-        if (left == null)
-            throw new ArgumentNullException(nameof(left));
-
-        if (right == null)
-            throw new ArgumentNullException(nameof(right));
-
         var leftParameter = left.Parameters[0];
         var rightParameter = right.Parameters[0];
 

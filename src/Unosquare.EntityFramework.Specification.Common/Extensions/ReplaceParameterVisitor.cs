@@ -11,9 +11,9 @@ internal class ReplaceParameterVisitor : ExpressionVisitor
         _from = from;
         _to = to;
     }
-
-    public override Expression Visit(Expression? node) =>
-        (node == _from
+        
+    public override Expression? Visit(Expression? node) =>
+        node == _from
             ? _to
-            : base.Visit(node)) ?? throw new InvalidOperationException();
+            : base.Visit(node);
 }

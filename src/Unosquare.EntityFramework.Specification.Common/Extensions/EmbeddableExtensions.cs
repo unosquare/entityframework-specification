@@ -28,24 +28,15 @@ public static class EmbeddableExtensions
         return (Expression<T>)visitor.Visit(exp);
     }
 
-    public static Expression ResolveEmbedded(this MethodCallExpression exp)
-    {
-        var visitor = new ResolveEmbeddedVisitor();
-        var arguments = exp.Arguments.Select(argument => visitor.Visit(argument)).ToList();
-
-        return Expression.Call(exp.Method, arguments);
-    }
-
     private class MultiParamReplaceVisitor : ExpressionVisitor
     {
         private readonly Dictionary<ParameterExpression, Expression> _replacements;
         private readonly LambdaExpression _expressionToVisit;
 
-        public MultiParamReplaceVisitor(IReadOnlyList<Expression> parameterValues, LambdaExpression expressionToVisit)
+        public MultiParamReplaceVisitor(Expression[] parameterValues, LambdaExpression expressionToVisit)
         {
-            if (parameterValues.Count != expressionToVisit.Parameters.Count)
-                throw new ArgumentException(
-                    $"The parameter values count ({parameterValues.Count}) does not match the expression parameter count ({expressionToVisit.Parameters.Count})");
+            if (parameterValues.Length != expressionToVisit.Parameters.Count)
+                throw new ArgumentException($"The parameter values count ({parameterValues.Length}) does not match the expression parameter count ({expressionToVisit.Parameters.Count})");
 
             _replacements = expressionToVisit.Parameters
                 .Select((parameter, idx) => new { Idx = idx, Parameter = parameter })
@@ -65,11 +56,11 @@ public static class EmbeddableExtensions
 
     private class ResolveEmbeddedVisitor : ExpressionVisitor
     {
-        private const string EmbedMethod = "Embed";
+        private const string _embedMethod = "Embed";
 
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
-            if (!DoesExpressionMatchMethod(node, EmbedMethod)) return base.VisitMethodCall(node);
+            if (!DoesExpressionMatchMethod(node, _embedMethod)) return base.VisitMethodCall(node);
 
             var specificationExpression = ExtractEmbeddedExpression(node).Body;
             return Visit(specificationExpression) ?? Expression.Empty();
@@ -77,8 +68,7 @@ public static class EmbeddableExtensions
 
         protected override Expression VisitInvocation(InvocationExpression node)
         {
-            if (node.Expression.NodeType != ExpressionType.Call ||
-                !DoesExpressionMatchMethod((MethodCallExpression)node.Expression, EmbedMethod))
+            if (node.Expression.NodeType != ExpressionType.Call || !DoesExpressionMatchMethod((MethodCallExpression)node.Expression, _embedMethod))
                 return base.VisitInvocation(node);
 
             var targetLambda = ExtractEmbeddedExpression((MethodCallExpression)node.Expression);
@@ -98,12 +88,16 @@ public static class EmbeddableExtensions
 
         private static LambdaExpression RetrieveEmbeddedExpression(object source)
         {
-            var expression = source switch
+            Expression? expression = null;
+
+            if (source is Primitive.Specification specification)
             {
-                Primitive.Specification specification => specification.GetExpression(),
-                Selector selector => selector.GetExpression(),
-                _ => null
-            };
+                expression = specification?.GetExpression();
+            }
+            else if (source is Selector selector)
+            {
+                expression = selector?.GetExpression();
+            }
 
             return (LambdaExpression)(expression ?? Expression.Empty());
         }
