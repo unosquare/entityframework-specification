@@ -566,6 +566,8 @@ public class CollectionExtensionsTests
     private static IList<ItemForTest> RetrieveTestItems() =>
         new[] { new ItemForTest("1", new(true)), new ItemForTest("2"), new ItemForTest("3") };
 
+#pragma warning disable IDE0028 // Simplify collection initialization
     private static IEnumerable<IList<SubItemForTest>> RetrieveTestItemsWithItemsWithin() =>
         new List<IList<SubItemForTest>>() { new List<SubItemForTest> { new(true), new(false) } };
+#pragma warning restore IDE0028 // Simplify collection initialization
 }
